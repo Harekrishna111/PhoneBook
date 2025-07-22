@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .phone_book {
+            width: 700px;
+            height: auto;
+            background-color: #e3e3e3;
+            border-radius: 15px;
+            box-shadow: 20px 20px 50px 15px rgb(146, 192, 220);
+        }
+
+        h1 {
+            color: #458abc;
+            font-family: initial;
+            position: relative;
+            top: 14px;
+            right: 17px;
+            text-decoration: underline;
+            text-shadow: 2px 2px 5px #74d4ff;
+        }
+
+        input[type="text"],
+        input[type="tel"] {
+            width: 200px;
+            padding: 10px;
+            margin: 15px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 15px;
+            margin: 5px 0;
+            border: none;
+            border-radius: 4px;
+            background-color: #5cb85c;
+            color: white;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .highlight {
+            background-color: #74c8ee;
+
+        }
+    </style>
+</head>
+<script>
+    var header = "<thead><th>Name</th><th>Contact</th><th>Operation</th></thead>";
+    var tbl_data = header;
+
+    function clicker() {
+
+        var n = document.getElementById("name_box").value;
+        var num = document.getElementById("num_box").value;
+        if (!(n == "" || num == "")) {
+
+            tbl_data += "<tr><td><input type='text' value='" + n + "' readOnly></td><td><input type='tel' value='" + num + "' readOnly></td><td><button onclick='edit(this)' style='margin-left: 5px;'>Edit</button><button onclick='Delete(this)' style='margin-left: 5px; background-color:red;'>Delete</button></td></tr>";
+            document.getElementById("tbl").innerHTML = tbl_data;
+
+            document.getElementById("name_box").value = "";
+            document.getElementById("num_box").value = "";
+        }
+    }
+
+    function edit(elem) {
+        elem.parentElement.parentElement.children[0].children[0].readOnly = false;
+        elem.parentElement.parentElement.children[1].children[0].readOnly = false;
+        elem.parentElement.innerHTML = "<button onclick='save(this)'>Save</button><button onclick='Delete(this)' style='margin-left: 5px; background-color:red;'>Delete</button>";
+    }
+
+    function save(elem) {
+        elem.parentElement.parentElement.children[0].children[0].readOnly = true;
+        elem.parentElement.parentElement.children[1].children[0].readOnly = true;
+        elem.parentElement.innerHTML = "<button onclick='edit(this)'>Edit</button><button onclick='Delete(this)' style='margin-left: 5px; background-color:red;'>Delete</button>";
+    }
+
+    function Delete(elem) {
+        elem.parentElement.parentElement.remove();
+        tbl_data = header;
+    }
+
+    function Search() {
+        var length_data = document.getElementById("tbl").children[1].childNodes.length;
+        var key = document.getElementById("Search_box").value;
+
+        for (var i = 0; i < length_data; i < h, i++) {
+            var q = document.getElementById("tbl").children[1].children[i].children[0].children[0].value;
+            var h = document.getElementById("tbl").children[1].children[i].children[1].children[0].value;
+            if (key == q || key == h) {
+                document.getElementById("tbl").children[1].children[i].children[0].children[0].classList.add("highlight");
+                document.getElementById("tbl").children[1].children[i].children[1].children[0].classList.add("highlight");
+            }
+
+        }
+    }
+</script>
+
+<body>
+    <center>
+        <div class="phone_book">
+            <center>
+
+                <h1>Phone Book</h1><br><br>
+
+                <input type="text" id="Search_box" placeholder="Search">
+                <button onclick="Search()">Search</button><br><br>
+                <input type="text" id="name_box" placeholder="Enter your name"><br>
+                <input type="text" id="num_box" placeholder="Enter your Number"><br>
+                <button onclick="clicker()">Submit</button><br><br>
+                <table border="2" id="tbl"></table>
+            </center>
+        </div>
+    </center>
+</body>
+
+</html>
